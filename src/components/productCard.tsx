@@ -9,12 +9,15 @@ import {
   Rating,
   Typography,
 } from '@mui/material'
+
+import { Link } from '@tanstack/react-router'
 import type { Product } from '../types'
 
 function ProductCard({ product }: { product: Product }) {
   return (
     <Grid width="300px">
       <Card>
+         <Link to="/$product" className="card-link" params={{product:product.id}}>
         <CardHeader title={product.stock > 0 ? 'in stock' : 'out of stock'} />
         <CardMedia component="img" image={product.thumbnail} />
         <CardContent>
@@ -28,7 +31,7 @@ function ProductCard({ product }: { product: Product }) {
             </Grid>
           </Grid>
         </CardContent>
-
+      </Link>
         <CardActions>
           <Button>Add to Cart</Button>
         </CardActions>
