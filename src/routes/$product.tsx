@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unnecessary-condition */
 import {
   Chip,
   Divider,
@@ -8,10 +9,11 @@ import {
 } from '@mui/material'
 import { createFileRoute } from '@tanstack/react-router'
 import axios from 'axios'
-import { useEffect, useState } from 'react'
+import {  useState } from 'react'
 import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Remove'
 import ProductImageGallery from '../components/ProductImageGallery'
+import type { Product } from '@/types'
 
 export const Route = createFileRoute('/$product')({
   component: Product,
@@ -23,12 +25,35 @@ export const Route = createFileRoute('/$product')({
   },
 })
 
+
+interface Dictionary<T>{
+  [key: number]: {
+    product: Product,
+    quantity:number,
+  }
+}
+
+
 function Product() {
   const { product } = Route.useLoaderData()
-  const [count, setCount] = useState(0)
-  useEffect(() => {
-    console.log(product)
-  }, [product])
+  const [count, setCount] = useState(0);
+
+  const handleAddCart = () => {
+    const stored = localStorage.getItem("products");
+    const dict: Dictionary<Product> = stored ? JSON.parse(stored) : {};
+  
+    const previousQuantity = Number(dict[product.id]?.quantity);
+    const newQuantity = count +previousQuantity;
+  
+    dict[product.id] = {
+      product,
+      quantity: newQuantity > 0 ? newQuantity : 0,
+    };
+  
+    console.log(dict);
+    localStorage.setItem("products", JSON.stringify(dict));
+  };
+
 
   return (
     <Grid container display="flex" padding="20pxs">
@@ -85,7 +110,7 @@ function Product() {
               </Grid>
               <Grid display="flex">
                 <Chip label="Buy now" />
-                <Chip label="Add to Cart" />
+                <Chip onClick={handleAddCart} label="Add to Cart" />
               </Grid>
             </Grid>
           </Grid>
