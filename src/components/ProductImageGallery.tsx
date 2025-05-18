@@ -14,8 +14,6 @@ interface ImageItem {
   alt: string;
 }
 
-
-
 const ProductImageGallery: React.FC<ProductImageGalleryProps> = ({ images }) => {
   const formatted: Array<ImageItem> = images.map((url, idx) => ({
     id: idx,
@@ -32,7 +30,7 @@ const ProductImageGallery: React.FC<ProductImageGalleryProps> = ({ images }) => 
   if (!selected) return null;
 
   return (
-    <Box sx={{ width: { xs: '100%', sm: 500 }, mx: 'auto', p: 2 }}>
+    <Box sx={{ width: { xs: '100%', sm: 500 },mx: 'auto', p: 2 }}>
       <Card sx={{ mb: 2, borderRadius: 2, boxShadow: 3 }}>
         <Box
           component="img"
