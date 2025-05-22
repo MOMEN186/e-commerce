@@ -20,7 +20,6 @@ export const Route = createFileRoute('/$product')({
   loader: async ({ params }) => {
     const { product } = params
     const res = await axios.get(`https://dummyjson.com/products/${product}`)
-    console.log(res)
     return { product: res.data }
   },
 })
@@ -50,7 +49,6 @@ function Product() {
       quantity: newQuantity > 0 ? newQuantity : 0,
     };
   
-    console.log(dict);
     localStorage.setItem("products", JSON.stringify(dict));
   };
 

@@ -1,16 +1,24 @@
-import { Box, Tab, Tabs } from '@mui/material'
+import { Box, Tab, Tabs, Button, IconButton } from '@mui/material'
 import { Link, Outlet, createRootRoute } from '@tanstack/react-router'
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
-import { useState } from 'react'
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import AcUnitIcon from '@mui/icons-material/AcUnit';
+import {  useEffect, useState } from 'react'
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
+import LanguageIcon from '@mui/icons-material/Language'
+import { useAppSelector, useAppDispatch } from '../store/hook'
+import { setLanguage } from '@/store/languageSlice'
 
 export const Route = createRootRoute({
   component: () => {
     const [value, setValue] = useState('/')
+    const lang = useAppSelector((state) => state.language.value)
+    const dispatch = useAppDispatch()
 
     const handleChange = (e: React.SyntheticEvent, newValue: string) => {
       setValue(newValue)
+    }
+
+    const handleClick = () => {
+      dispatch(setLanguage(lang === 'en' ? 'ar' : 'en'));
     }
 
     return (
@@ -32,7 +40,7 @@ export const Route = createRootRoute({
           />
           <Tab
             component={Link as React.ElementType}
-            icon={<ShoppingCartIcon/>}
+            icon={<ShoppingCartIcon />}
             aria-label="cart"
             value="/cart"
             to="/cart"
@@ -41,8 +49,9 @@ export const Route = createRootRoute({
               sx: { fontWeight: 'bold' },
             }}
           />
-          
-          
+          <IconButton onClick={handleClick}>
+            <LanguageIcon sx={{color:"black"}} />
+          </IconButton>
         </Tabs>
         <hr />
         <Outlet />
