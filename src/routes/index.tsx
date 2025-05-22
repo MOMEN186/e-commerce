@@ -24,7 +24,7 @@ export default function ProductsList() {
   return (
     <Grid>
       <Grid padding="20px" display="flex" gap="10px" flexWrap="wrap" >
-        {products.map((product: Product) => <ProductCard product={product} />)}
+        {products.map((product: Product) => <ProductCard key={product.id} product={product} />)}
       </Grid>
     </Grid>
   )
